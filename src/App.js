@@ -17,7 +17,10 @@ const ASSETS = [
 async function fetchYahoo(symbol) {
   try {
     const url = `/api/yahoo/${symbol}`;
-    const res = await fetch(url, { headers: { "Accept": "application/json" }, signal: AbortSignal.timeout(10000) });
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 12000);
+    const res = await fetch(url, { headers: { "Accept": "application/json" }, signal: ctrl.signal });
+    clearTimeout(timer);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const raw = await res.json();
     const result = raw?.chart?.result?.[0];
