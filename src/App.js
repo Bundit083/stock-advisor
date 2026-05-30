@@ -16,7 +16,7 @@ const ASSETS = [
 // Yahoo Finance โดยตรง — ใช้ได้เพราะ deploy บน domain ของเราเอง ไม่ถูก block CORS
 async function fetchYahoo(symbol) {
   try {
-    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1d&range=60d`;
+    const url = `/api/yahoo/${symbol}`;
     const res = await fetch(url, { headers: { "Accept": "application/json" }, signal: AbortSignal.timeout(10000) });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const raw = await res.json();
